@@ -203,9 +203,9 @@ function SelectMenuDirective($parse, $mdSelect, $mdUtil, $mdTheming) {
     self.init = function(ngModel) {
       self.ngModel = ngModel;
 
-      if($attr.mdOnChange) {
+      if($attrs.mdOnChange) {
         self.ngModel.$viewChangeListeners.push(function(){
-          scope.$eval($attr.mdOnChange);
+          $scope.$eval($attrs.mdOnChange);
         });
       }
 
