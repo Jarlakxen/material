@@ -103,6 +103,7 @@ function SelectDirective($mdSelect, $mdUtil, $q, $mdTheming) {
     var selectTemplate = '' +
       '<div class="md-select-menu-container">' +
         '<md-select-menu ng-model="$parent.' + attr.ngModel + '" ' +
+        (angular.isDefined(attr.mdOnChange) ? 'md-on-change="' + attr.mdOnChange + '"' : '') +
         (angular.isDefined(attr.multiple) ? 'multiple' : '') + '>' +
           element.html() +
         '</md-select-menu></div>';
@@ -201,6 +202,12 @@ function SelectMenuDirective($parse, $mdSelect, $mdUtil, $mdTheming) {
 
     self.init = function(ngModel) {
       self.ngModel = ngModel;
+
+      if($attr.mdOnChange) {
+        self.ngModel.$viewChangeListeners.push(function(){
+          scope.$eval($attr.mdOnChange);
+        });
+      }
 
       // Allow users to provide `ng-model="foo" ng-model-options="{trackBy: 'foo.id'}"` so
       // that we can properly compare objects set on the model to the available options
